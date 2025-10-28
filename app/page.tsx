@@ -186,7 +186,7 @@ export default function UpsellPacoteStarter() {
               className="w-full flex justify-center"
             >
               <img
-                src="/images/upsell-hero.png"
+                src="/images/hero.png"
                 alt="Pacote Starter Tetel"
                 className="w-full max-w-md rounded-3xl shadow-xl"
               />

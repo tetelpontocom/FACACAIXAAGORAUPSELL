@@ -15,7 +15,12 @@ export const metadata: Metadata = {
       "Aproveite a oportunidade única: Guia Bônus de Autoridade e Presença, 20% OFF em Instagram Analyzer e acesso antecipado ao TetelPontocom.",
     type: "website",
   },
-    generator: 'v0.app'
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  generator: "v0.app",
 }
 
 export default function RootLayout({
