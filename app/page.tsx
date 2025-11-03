@@ -1,10 +1,9 @@
 "use client"
 
 import type React from "react"
-
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { ShieldCheck, Sparkles, Gift, CheckCircle2, Rocket, ArrowRight } from "lucide-react"
+import { ShieldCheck, Sparkles, Gift, CheckCircle2, Rocket, ArrowRight, Home } from "lucide-react"
 
 declare global {
   interface Window {
@@ -14,6 +13,28 @@ declare global {
 }
 
 export default function UpsellPacoteStarter() {
+  const [isFromTetel, setIsFromTetel] = useState(false)
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const origem = params.get("origem")?.toLowerCase()
+
+      if (origem === "tetelpontocom") {
+        sessionStorage.setItem("tetel_origem", "tetelpontocom")
+        setIsFromTetel(true)
+        return
+      }
+
+      const saved = sessionStorage.getItem("tetel_origem")
+      if (saved === "tetelpontocom") {
+        setIsFromTetel(true)
+      }
+    } catch {
+      // Fallback silencioso
+    }
+  }, [])
+
   useEffect(() => {
     console.log("[v0] Inicializando Meta Pixel...")
 
@@ -93,6 +114,17 @@ export default function UpsellPacoteStarter() {
 
   const container = "max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
 
+  const texto = isFromTetel
+    ? {
+        titulo: "Você já deu o primeiro passo pela TetelPontocom.",
+        subtitulo:
+          "Agora complete seu kit de entrada com o Pacote Starter Tetel — o passo seguinte para crescer com propósito.",
+      }
+    : {
+        titulo: "Você já deu o primeiro passo.",
+        subtitulo: "Agora complete seu kit de entrada com conteúdo bônus e benefícios reais.",
+      }
+
   return (
     <>
       <noscript>
@@ -119,8 +151,8 @@ export default function UpsellPacoteStarter() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight">
-                Você já deu o primeiro passo. <br />
-                <span className="underline decoration-amber-400/60">Agora complete seu kit de entrada.</span>
+                {texto.titulo} <br />
+                <span className="underline decoration-amber-400/60">{texto.subtitulo}</span>
               </h1>
               <p className="mt-4 text-lg text-neutral-800">
                 Ative o <strong>Pacote Starter Tetel</strong> e acelere seus resultados no digital com conteúdo bônus e
@@ -186,13 +218,26 @@ export default function UpsellPacoteStarter() {
               className="w-full flex justify-center"
             >
               <img
-                src="/images/hero.png"
+                src="/images/hero-starter-tetel.png"
                 alt="Pacote Starter Tetel"
                 className="w-full max-w-md rounded-3xl shadow-xl"
               />
             </motion.div>
           </div>
         </section>
+
+        {isFromTetel && (
+          <section className="bg-white/50">
+            <div className={`${container} py-8 text-center`}>
+              <a
+                href="https://tetelpontocom.tetel.online"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#EEDFD2] text-[#1a1a1a] px-6 py-3 text-sm font-medium hover:bg-[#EBD2BF] transition"
+              >
+                <Home className="h-5 w-5" /> Voltar à TetelPontocom
+              </a>
+            </div>
+          </section>
+        )}
 
         {/* REFORÇO DE VALOR */}
         <section className="bg-white/70">
@@ -253,8 +298,36 @@ export default function UpsellPacoteStarter() {
 
         {/* FOOTER */}
         <footer className="bg-white/70 border-t border-black/5">
-          <div className={`${container} py-8 text-sm text-neutral-700 flex items-center justify-center`}>
-            © {new Date().getFullYear()} Tetel — Ecossistema de soluções simples e humanas.
+          <div className={`${container} py-8 text-sm text-neutral-700`}>
+            <p className="text-center mb-4">
+              © {new Date().getFullYear()} Tetel — Ecossistema de soluções simples e humanas.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+              <a
+                href="https://tetel.online/pravoce"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                PraVocê · Tetel
+              </a>
+              <a
+                href="https://minhaia.tetel.online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Minha IA
+              </a>
+              <a
+                href="https://facacaixaagora.tetel.online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Faça Caixa Agora
+              </a>
+            </div>
           </div>
         </footer>
       </main>
