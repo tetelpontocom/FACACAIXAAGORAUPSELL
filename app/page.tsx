@@ -4,7 +4,6 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { CheckCircle2, ArrowRight, Home, CheckCircle } from "lucide-react"
 import Image from "next/image"
-import Head from "next/head"
 
 declare global {
   interface Window {
@@ -128,11 +127,6 @@ export default function UpsellPacoteStarter() {
 
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-      </Head>
-
       <noscript>
         <img
           height="1"
