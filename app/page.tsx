@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useEffect, useState } from "react"
-import { CheckCircle2, CheckCircle, Rocket, ArrowRight, Home } from "lucide-react"
+import { CheckCircle2, ArrowRight, Home, CheckCircle } from "lucide-react"
 import Image from "next/image"
 
 declare global {
@@ -81,10 +81,6 @@ export default function UpsellPacoteStarter() {
     }
   }
 
-  const lead = (source: string) => {
-    track("track", "Lead", { source })
-  }
-
   const handleCheckout = (e: React.MouseEvent<HTMLAnchorElement>, source: string) => {
     e.preventDefault()
     const url = e.currentTarget.href
@@ -123,12 +119,10 @@ export default function UpsellPacoteStarter() {
         titulo: "Você já deu o primeiro passo pela TetelPontocom.",
         subtitulo:
           "Agora complete seu kit de entrada com o Pacote Starter Tetel — o passo seguinte para crescer com propósito.",
-        cta: "Quero o Pacote Starter agora",
       }
     : {
         titulo: "Você já deu o primeiro passo.",
         subtitulo: "Agora complete seu kit de entrada com conteúdo bônus e benefícios reais.",
-        cta: "Quero o Pacote Starter agora",
       }
 
   return (
@@ -143,73 +137,64 @@ export default function UpsellPacoteStarter() {
         />
       </noscript>
 
-      <main className="min-h-screen bg-gradient-to-b from-[#fff8ef] via-[#fff3e6] to-[#ffe8dd] text-[#1a1a1a]">
-        {/* Header */}
-        <header className="border-b border-black/5 bg-white/60 backdrop-blur">
-          <div className={`${container} py-3 flex items-center justify-center gap-2 text-sm`}>
-            <Rocket className="h-4 w-4" />
-            <span>Oferta exclusiva • disponível apenas agora</span>
-          </div>
-        </header>
+      <main className="min-h-screen bg-[#FFF6EF] text-[#1F1A17] flex flex-col items-center justify-center px-6 py-16">
+        {/* HERO REESTRUTURADA */}
+        <div className="max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16">
+          {/* Texto principal */}
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-3">{texto.titulo}</h1>
+            <p className="text-[#4B423C] text-base mb-6">{texto.subtitulo}</p>
 
-        {/* HERO */}
-        <section className="min-h-screen bg-[#FFF6EF] text-[#1F1A17] flex flex-col items-center justify-center px-6 py-16">
-          {/* HERO REESTRUTURADA */}
-          <div className="max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16">
-            {/* Texto principal */}
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-2xl md:text-3xl font-bold leading-snug mb-3">{texto.titulo}</h1>
-              <p className="text-[#4B423C] text-base mb-6">{texto.subtitulo}</p>
+            <ul className="space-y-3 text-sm text-[#4B423C] mb-6 text-left md:text-left mx-auto md:mx-0 max-w-md">
+              {[
+                "Inclui o Faça Caixa Agora completo.",
+                "Vem com Minha IA Premium integrada.",
+                "Bônus exclusivos e suporte inicial.",
+                "Ideal para quem quer resultados rápidos e sólidos.",
+              ].map((t, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-[#FF6B00] mt-0.5 flex-shrink-0" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
 
-              <ul className="space-y-3 text-sm text-[#4B423C] mb-6 text-left md:text-left mx-auto md:mx-0 max-w-md">
-                {[
-                  "Inclui o Faça Caixa Agora completo.",
-                  "Vem com Minha IA Premium integrada.",
-                  "Bônus exclusivos e suporte inicial.",
-                  "Ideal para quem quer resultados rápidos e sólidos.",
-                ].map((t, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-[#FF6B00] mt-0.5 flex-shrink-0" />
-                    <span>{t}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="https://kiwify.com.br/pacote-starter-tetel"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => lead("CTA - Pacote Starter Tetel")}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#1F1A17] text-white px-6 py-3 text-base shadow-sm hover:opacity-90 transition"
-              >
-                {texto.cta} <ArrowRight className="h-5 w-5" />
-              </a>
-            </div>
-
-            {/* Imagem ilustrativa */}
-            <div className="flex justify-center md:justify-end flex-1">
-              <Image
-                src="/images/hero-starter-tetel.png"
-                alt="Pacote Starter Tetel"
-                width={450}
-                height={500}
-                className="rounded-2xl shadow-md max-w-[380px] md:max-w-[480px] h-auto"
-                priority
-              />
-            </div>
+            <a
+              href="https://kiwify.com.br/pacote-starter-tetel"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => handleCheckout(e, "pacote_starter_tetel")}
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#1F1A17] text-white px-6 py-3 text-base shadow-sm hover:opacity-90 transition"
+            >
+              {isFromTetel ? "Sim, quero o Pacote Starter agora" : "Quero o Pacote Starter agora"}{" "}
+              <ArrowRight className="h-5 w-5" />
+            </a>
           </div>
 
-          {isFromTetel && (
-            <div className="relative -mt-10 md:-mt-6 z-20 text-center">
-              <a
-                href="https://tetelpontocom.tetel.online"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#EEDFD2] text-[#1F1A17] px-6 py-3 text-base font-medium hover:bg-[#EBD2BF] transition"
-              >
-                <Home className="h-5 w-5" /> Voltar à TetelPontocom
-              </a>
-            </div>
-          )}
-        </section>
+          {/* Imagem ilustrativa */}
+          <div className="flex justify-center md:justify-end flex-1">
+            <Image
+              src="/images/hero-starter-tetel.png"
+              alt="Pacote Starter Tetel"
+              width={450}
+              height={500}
+              className="rounded-2xl shadow-md max-w-[380px] md:max-w-[480px] h-auto"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* BOTÃO DE RETORNO — POSICIONAMENTO FIXADO */}
+        {isFromTetel && (
+          <div className="relative -mt-10 md:-mt-6 z-20 text-center">
+            <a
+              href="https://tetelpontocom.tetel.online"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#EEDFD2] text-[#1F1A17] px-6 py-3 text-base font-medium hover:bg-[#EBD2BF] transition"
+            >
+              <Home className="h-5 w-5" /> Voltar à TetelPontocom
+            </a>
+          </div>
+        )}
 
         {/* REFORÇO DE VALOR */}
         <section className="bg-white/70">
