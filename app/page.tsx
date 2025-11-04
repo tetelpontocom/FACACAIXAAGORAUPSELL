@@ -4,6 +4,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { CheckCircle2, ArrowRight, Home, CheckCircle } from "lucide-react"
 import Image from "next/image"
+import Head from "next/head"
 
 declare global {
   interface Window {
@@ -127,6 +128,11 @@ export default function UpsellPacoteStarter() {
 
   return (
     <>
+      <Head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+      </Head>
+
       <noscript>
         <img
           height="1"
@@ -174,7 +180,7 @@ export default function UpsellPacoteStarter() {
           {/* Imagem ilustrativa */}
           <div className="flex justify-center md:justify-end flex-1">
             <Image
-              src="/images/hero-starter-tetel.png"
+              src="/images/hero-pacotestarter.png"
               alt="Pacote Starter Tetel"
               width={450}
               height={500}
@@ -183,18 +189,6 @@ export default function UpsellPacoteStarter() {
             />
           </div>
         </div>
-
-        {/* BOTÃO DE RETORNO — POSICIONAMENTO FIXADO */}
-        {isFromTetel && (
-          <div className="relative -mt-10 md:-mt-6 z-20 text-center">
-            <a
-              href="https://tetelpontocom.tetel.online"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#EEDFD2] text-[#1F1A17] px-6 py-3 text-base font-medium hover:bg-[#EBD2BF] transition"
-            >
-              <Home className="h-5 w-5" /> Voltar à TetelPontocom
-            </a>
-          </div>
-        )}
 
         {/* REFORÇO DE VALOR */}
         <section className="bg-white/70">
@@ -252,6 +246,20 @@ export default function UpsellPacoteStarter() {
             </div>
           </div>
         </section>
+
+        {/* Return Button Section */}
+        {isFromTetel && (
+          <section className="border-t border-[#EEDFD2] bg-[#FFF9F4] w-full">
+            <div className="mx-auto max-w-6xl px-4 py-12 text-center">
+              <a
+                href="https://tetelpontocom.tetel.online"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#EEDFD2] text-[#1F1A17] px-6 py-3 text-base font-medium hover:bg-[#EBD2BF] transition shadow-sm"
+              >
+                <Home className="h-5 w-5" /> Voltar à TetelPontocom
+              </a>
+            </div>
+          </section>
+        )}
 
         {/* FOOTER */}
         <footer className="bg-white/70 border-t border-black/5">
