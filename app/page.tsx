@@ -93,7 +93,7 @@ function StarterTetelContent() {
           </div>
 
           <button
-            onClick={handleIntentBuy}
+            onClick={handleIntentTalk}
             className="rounded-xl bg-[#1a1a1a] text-white px-4 py-2 text-sm font-semibold hover:opacity-90 transition"
           >
             Comprar agora
@@ -131,7 +131,7 @@ function StarterTetelContent() {
             <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
               {/* CTA COMPRA */}
               <button
-                onClick={handleIntentBuy}
+                onClick={handleIntentTalk}
                 className="rounded-2xl bg-[#1a1a1a] text-white px-6 py-3 text-sm font-semibold"
               >
                 Quero o Pacote Starter agora
