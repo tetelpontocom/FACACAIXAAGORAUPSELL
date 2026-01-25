@@ -1,39 +1,37 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
+import React from "react"
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Pacote Starter Tetel · Oferta exclusiva pós-compra",
-  description:
-    "Complete seu kit de entrada no digital com o Pacote Starter Tetel — conteúdo e benefícios para acelerar seus resultados.",
+  title: 'Pacote Starter Tetel · Oferta exclusiva',
+  description: 'Complete seu kit de entrada no ecossistema TetelPontocom com o Pacote Starter Tetel.',
+  generator: 'v0.app',
   openGraph: {
-    title: "Pacote Starter Tetel · Upsell",
-    description:
-      "Aproveite a oportunidade única: Guia Bônus de Autoridade e Presença, 20% OFF em Instagram Analyzer e acesso antecipado ao TetelPontocom.",
-    type: "website",
+    title: 'Pacote Starter Tetel',
+    description: 'Um passo estruturado para quem já começou e quer avançar com clareza.',
+    type: 'website',
   },
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.png", type: "image/png" },
-    ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon.png",
+    icon: '/favicon.ico',
   },
-  generator: "v0.app",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="pt-BR">
-      <body className={inter.className}>{children}</body>
+    <html lang="en">
+      <body className={`font-sans antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
