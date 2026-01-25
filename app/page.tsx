@@ -21,20 +21,45 @@ function StarterContent() {
   const WHATSAPP_URL =
     "https://wa.me/5582999176900?text=Oi%2C+vim+pela+LP+Pacote+Starter+Tetel.+Quero+falar+antes+de+comprar+(compra+assistida)."
 
-  const fbq = (...args: any[]) => {
-    try {
-      if (typeof window !== "undefined" && window.fbq) window.fbq(...args)
-    } catch {}
+  /**
+   * fbq pode não estar disponível no exato instante do useEffect,
+   * porque o Script do pixel (afterInteractive) ainda pode estar carregando.
+   * Este helper tenta por alguns segundos e só então desiste (sem quebrar a página).
+   */
+  const fbqTry = (args: any[], opts?: { retries?: number; intervalMs?: number }) => {
+    const retries = opts?.retries ?? 24 // ~6s
+    const intervalMs = opts?.intervalMs ?? 250
+    let n = 0
+
+    const attempt = () => {
+      try {
+        if (typeof window !== "undefined" && typeof window.fbq === "function") {
+          window.fbq(...args)
+          return true
+        }
+      } catch {
+        // silencioso
+      }
+      return false
+    }
+
+    if (attempt()) return
+
+    const t = window.setInterval(() => {
+      n += 1
+      if (attempt() || n >= retries) window.clearInterval(t)
+    }, intervalMs)
   }
 
   useEffect(() => {
-    fbq("track", "ViewContent", { page: "lp_starter_tetel" })
+    // Equivalente ao modelo (Faça Caixa Agora): ViewContent + ScrollDepth50
+    fbqTry(["track", "ViewContent", { page: "lp_starter_tetel" }])
 
     const onScroll = () => {
       const pct = (window.scrollY + window.innerHeight) / document.body.scrollHeight
       if (pct >= 0.5 && !scrollTracked.current) {
         scrollTracked.current = true
-        fbq("trackCustom", "ScrollDepth50", { page: "lp_starter_tetel" })
+        fbqTry(["trackCustom", "ScrollDepth50", { page: "lp_starter_tetel" }], { retries: 12, intervalMs: 200 })
       }
     }
 
@@ -44,18 +69,18 @@ function StarterContent() {
 
   // CTA principal (mantém IntentBuy, mas leva ao WhatsApp)
   const handleBuy = () => {
-    fbq("trackCustom", "IntentBuy", { page: "lp_starter_tetel" })
+    fbqTry(["trackCustom", "IntentBuy", { page: "lp_starter_tetel" }], { retries: 10, intervalMs: 150 })
     setTimeout(() => {
       window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer")
-    }, 150)
+    }, 180)
   }
 
   // CTA de intenção (WhatsApp)
   const handleTalk = () => {
-    fbq("trackCustom", "IntentTalk", { page: "lp_starter_tetel" })
+    fbqTry(["trackCustom", "IntentTalk", { page: "lp_starter_tetel" }], { retries: 10, intervalMs: 150 })
     setTimeout(() => {
       window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer")
-    }, 150)
+    }, 180)
   }
 
   return (
@@ -104,9 +129,7 @@ function StarterContent() {
             </button>
           </div>
 
-          <p className="mt-2 text-xs text-[#4B423C]">
-            Compra assistida — início guiado no WhatsApp
-          </p>
+          <p className="mt-2 text-xs text-[#4B423C]">Compra assistida — início guiado no WhatsApp</p>
 
           <div className="mt-4 flex gap-6 text-sm text-[#1F1A17]/80">
             <span>🛡️ Garantia de 7 dias</span>
