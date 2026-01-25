@@ -2,22 +2,14 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Script from "next/script"
-import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Pacote Starter Tetel · Oferta exclusiva",
-  description: "Complete seu kit de entrada no ecossistema TetelPontocom com o Pacote Starter Tetel.",
-  openGraph: {
-    title: "Pacote Starter Tetel",
-    description: "Um passo estruturado para quem já começou e quer avançar com clareza.",
-    type: "website",
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
+  description: "Complete seu kit de entrada com o Pacote Starter Tetel.",
+  icons: { icon: "/favicon.png" },
   generator: "v0.app",
 }
 
@@ -29,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Meta Pixel — bootstrap canônico (TetelPontocom) */}
+        {/* Meta Pixel — Bootstrap (TetelPontocom) */}
         <Script
           id="meta-pixel-base"
           strategy="afterInteractive"
@@ -58,10 +50,8 @@ fbq('track', 'PageView');
           />
         </noscript>
       </head>
-      <body className={inter.className}>
-        {children}
-        <Analytics />
-      </body>
+
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
